@@ -72,13 +72,13 @@ def load_ai_model():
 model = load_ai_model()
 
 # ==========================================
-# 3. HELPER FUNCTION: GAUGE CHARTS
+# 3. HELPER FUNCTION: GAUGE CHARTS (FIXED)
 # ==========================================
 def create_gauge(value, title, min_val, max_val, safe_min, safe_max, color_hex):
     fig = go.Figure(go.Indicator(
         mode = "gauge+number",
         value = value,
-        title = {'text': title, 'font': {'size': 16, 'color': "white"}}, # Reduced font size slightly
+        title = {'text': title, 'font': {'size': 20, 'color': "white"}}, # Increased font slightly for visibility
         number = {'font': {'color': "white"}},
         gauge = {
             'axis': {'range': [min_val, max_val], 'tickcolor': "white"},
@@ -97,12 +97,12 @@ def create_gauge(value, title, min_val, max_val, safe_min, safe_max, color_hex):
             }
         }
     ))
-    # FIX: Increased bottom margin (b=60) so title doesn't get cut off
+    # FIX APPLIED HERE: Changed 't' (Top Margin) from 30 to 60 to prevent title clipping
     fig.update_layout(
         paper_bgcolor = "rgba(0,0,0,0)", 
         font = {'color': "white"}, 
-        height=220, 
-        margin=dict(l=20,r=20,t=30,b=60) 
+        height=250,  # Increased height slightly to accommodate the margin
+        margin=dict(l=20,r=20,t=60,b=20) 
     )
     return fig
 
@@ -119,7 +119,7 @@ with st.sidebar:
     days = st.number_input("📅 Shelf Life (Days)", value=120)
     
     st.divider()
-    st.caption("System v3.2 Pro | Connected")
+    st.caption("System v3.3 Pro | Connected")
 
 # ==========================================
 # 5. MAIN DASHBOARD LAYOUT
@@ -144,7 +144,7 @@ with col2:
 with col3:
     # Chemical Purity metric card
     st.markdown(f"""
-    <div class="metric-card" style="text-align: center; height: 220px;">
+    <div class="metric-card" style="text-align: center; height: 250px;">
         <h3 style="margin:0; color: #aaa; font-size: 16px;">Chemical Purity Index</h3>
         <h1 style="font-size: 3em; color: {'#00CC96' if chem > 0.85 else '#EF553B'}; margin: 10px 0;">
             {chem*100:.1f}%
@@ -153,7 +153,7 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-# --- ROW 2: SENSOR TRENDS GRAPH (New) ---
+# --- ROW 2: SENSOR TRENDS GRAPH ---
 st.divider()
 st.markdown("### 📈 Sensor Trend Analysis (Last 20 Mins)")
 # Generate fake trend data centered around current slider values
